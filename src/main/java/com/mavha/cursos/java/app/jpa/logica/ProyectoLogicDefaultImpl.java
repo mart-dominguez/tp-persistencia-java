@@ -37,5 +37,16 @@ public class ProyectoLogicDefaultImpl implements ProyectoLogic{
             proyectoDao.crear(p);
         }
     }
+
+    @Override
+    public void asignarTarea(Integer idProyecto, Integer idResponsable,Integer duracionEstimada) {
+       
+    }    
+
+    @Override
+    public Double presupuestoConsumido(Integer idProyecto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 }

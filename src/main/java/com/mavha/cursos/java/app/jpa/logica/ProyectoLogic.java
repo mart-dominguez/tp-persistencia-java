@@ -21,4 +21,6 @@ public interface ProyectoLogic {
      * @param idLider: el ID del lider del proyecto. 
      */
     public void crearProyecto(String nombre, Double presupuesto,Integer idLider);
+    public void asignarTarea(Integer idProyecto, Integer idResponsable,Integer duracionEstimada);
+    public Double presupuestoConsumido(Integer idProyecto);
 }

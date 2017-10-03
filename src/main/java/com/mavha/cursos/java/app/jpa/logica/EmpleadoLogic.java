@@ -6,14 +6,13 @@
 package com.mavha.cursos.java.app.jpa.logica;
 
 import com.mavha.cursos.java.app.jpa.modelo.Empleado;
-import com.mavha.cursos.java.app.jpa.modelo.Proyecto;
-import com.mavha.cursos.java.app.jpa.modelo.Tarea;
+import java.util.Date;
 
 /**
  *
  * @author mdominguez
  */
-public interface ProyectoLogic {
+public interface EmpleadoLogic {
 
     /**
      * Si se cumple la condicion 
@@ -21,7 +20,6 @@ public interface ProyectoLogic {
      * @param presupuesto: el presupuesto del proyecto es obligatorio
      * @param idLider: el ID del lider del proyecto. 
      */
-    public Proyecto crearProyecto(String nombre, Double presupuesto,Integer idLider);
-    public Double presupuestoDisponible(Integer idProyecto);
-    public Tarea asignarTarea(Integer idProyecto, Integer idResponsable,String descripcion,Integer duracionEstimada);
+    public Empleado crearEmpleado(String nombre, Double salarioHora,Date fecAlta);
+    public void asignarDepartamento(Integer idEmpleado,Integer idDepto);
 }

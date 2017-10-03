@@ -13,9 +13,9 @@ import java.util.List;
  * @author mdominguez
  */
 public interface DepartamentoDao {
-    public void crear(Departamento t);
+    public Departamento crear(Departamento t);
     public void borrar(Departamento t);
-    public void actualizar(Departamento t);
+    public Departamento actualizar(Departamento t);
     public Departamento buscarPorId(Integer id);
     public List<Departamento> buscarTodos();
 

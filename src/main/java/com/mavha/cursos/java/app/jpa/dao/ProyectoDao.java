@@ -13,9 +13,9 @@ import java.util.List;
  * @author mdominguez
  */
 public interface ProyectoDao {
-    public void crear(Proyecto t);
+    public Proyecto crear(Proyecto t);
     public void borrar(Proyecto t);
-    public void actualizar(Proyecto t);
+    public Proyecto actualizar(Proyecto t);
     public Proyecto buscarPorId(Integer id);
     public List<Proyecto> buscarTodos();
 

@@ -7,6 +7,7 @@ package com.mavha.cursos.java.app.jpa.dao;
 
 import com.mavha.cursos.java.app.jpa.modelo.Departamento;
 import com.mavha.cursos.java.app.jpa.modelo.Empleado;
+import com.mavha.cursos.java.app.jpa.modelo.Tarea;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -20,20 +21,36 @@ import javax.persistence.TemporalType;
 public class EmpleadoDaoJPA implements EmpleadoDao{
 
     private EntityManager em;
+    
     @Override
-    public void guardar(Empleado e) {
+    public Empleado guardar(Empleado e) {
         em = ConexionJPA.getInstance().em();
         em.getTransaction().begin();
         em.persist(e);
+        // forzar el insert en la base de datos
+        em.flush();
+        // refrescar con los datos de la base de datos
+        em.refresh(e);
         em.getTransaction().commit();
-        em.close();        
+        em.close();   
+        return e;
     }
 
     @Override
     public void borrar(Empleado e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
+    @Override
+    public Empleado actualizar(Empleado e) {
+        em = ConexionJPA.getInstance().em();
+        em.getTransaction().begin();
+        Empleado empActualizado = em.merge(e);
+        em.getTransaction().commit();
+        em.close();        
+        return empActualizado;
+    }
+    
     @Override
     public Empleado buscarPorId(Integer id) {
         em = ConexionJPA.getInstance().em();
@@ -110,6 +127,35 @@ public class EmpleadoDaoJPA implements EmpleadoDao{
         em.getTransaction().commit();
         em.close();
     }
+
+    @Override
+    public Double salarioPromedioTodos(){
+        Double d = 0.0;
+        em = ConexionJPA.getInstance().em();
+        em.getTransaction().begin();
+        Query query = em.createQuery("SELECT AVG(e.salarioHora) FROM Empleado e");
+        Number promedio = (Number) query.getSingleResult();
+        if(promedio!=null) d = promedio.doubleValue();
+        em.getTransaction().commit();
+        em.close();
+        return d;
+    }
+
+    @Override
+    public List<Tarea> tareasPendientes(Integer idEmpleado) {
+        List<Tarea> lista = null;
+        em = ConexionJPA.getInstance().em();
+        em.getTransaction().begin();
+        Query query = em.createQuery("SELECT t FROM Empleado e "
+                + " JOIN e.tareasAsignadas t "
+                + "WHERE e.id = :idEmpleado AND t.fechaFin IS NULL");
+        query.setParameter("idEmpleado", idEmpleado);
+        lista = query.getResultList();
+        em.getTransaction().commit();
+        em.close();
+        return lista;
+    }
+
     
     
 }

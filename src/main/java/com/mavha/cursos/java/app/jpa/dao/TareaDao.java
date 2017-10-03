@@ -13,9 +13,9 @@ import java.util.List;
  * @author mdominguez
  */
 public interface TareaDao {
-    public void crear(Tarea t);
+    public Tarea crear(Tarea t);
     public void borrar(Tarea t);
-    public void actualizar(Tarea t);
+    public Tarea actualizar(Tarea t);
     public Tarea buscarPorId(Integer id);
     public List<Tarea> buscarTodas();
 }

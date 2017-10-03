@@ -14,6 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -35,7 +36,7 @@ public class TestORM {
     }
 
    
-    @Test
+    @Ignore
     public void testContainsOneToMany() {
         Empleado e1 = new Empleado("MARTIN 1 ",100.0,new Date());
         Empleado e2 = new Empleado("MARTIN 2",100.0,new Date());
@@ -58,7 +59,7 @@ public class TestORM {
     }    
     
     
-        @Test
+        @Ignore
     public void testContainsOneToManyBi() {
         Empleado e1 = new Empleado("MARTIN 3 ",100.0,new Date());
         Empleado e2 = new Empleado("MARTIN 4",100.0,new Date());

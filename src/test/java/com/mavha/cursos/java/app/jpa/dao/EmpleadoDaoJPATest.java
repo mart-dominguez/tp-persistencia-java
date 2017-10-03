@@ -13,6 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -36,7 +37,7 @@ public class EmpleadoDaoJPATest {
     /**
      * Test of guardar method, of class EmpleadoDaoJPA.
      */
-    @Test
+    @Ignore
     public void testGuardar1() {
         Empleado e = new Empleado("MARTIN",100.0,new Date());
         EntityManager em = ConexionJPA.getInstance().em();
@@ -46,7 +47,7 @@ public class EmpleadoDaoJPATest {
         em.close();        
     }
 
-    @Test
+    @Ignore
     public void testGuardar2() {
         Empleado e = new Empleado("MARTIN2",200.0,new Date());
         EntityManager em = ConexionJPA.getInstance().em();
@@ -92,7 +93,8 @@ public class EmpleadoDaoJPATest {
 
     }
 
-    @Test(expected = PersistenceException.class)
+    //Test(expected = PersistenceException.class)
+    @Ignore
     public void testMergeFail() {
         Empleado e = new Empleado("MARTIN2",200.0,new Date());
         EntityManager em = ConexionJPA.getInstance().em();
@@ -112,7 +114,7 @@ public class EmpleadoDaoJPATest {
         
     }
 
-    @Test
+    @Ignore
     public void testMergeOk() {
         Empleado e = new Empleado("MARTIN2",200.0,new Date());
         EntityManager em = ConexionJPA.getInstance().em();
@@ -141,7 +143,7 @@ public class EmpleadoDaoJPATest {
         
     }
     
-    @Test
+    @Ignore
     public void testContains() {
         
         EntityManager em = ConexionJPA.getInstance().em();
@@ -173,7 +175,7 @@ public class EmpleadoDaoJPATest {
     }
 
     
-    @Test
+    @Ignore
     public void testContainsOneToMany() {
         
     }    

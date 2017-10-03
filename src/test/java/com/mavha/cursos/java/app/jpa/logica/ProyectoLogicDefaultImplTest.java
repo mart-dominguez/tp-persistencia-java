@@ -5,12 +5,9 @@
  */
 package com.mavha.cursos.java.app.jpa.logica;
 
-import com.mavha.cursos.java.app.jpa.dao.EmpleadoDao;
-import com.mavha.cursos.java.app.jpa.dao.EmpleadoDaoJPA;
-import com.mavha.cursos.java.app.jpa.dao.ProyectoDao;
-import com.mavha.cursos.java.app.jpa.dao.ProyectoDaoJPA;
 import com.mavha.cursos.java.app.jpa.modelo.Empleado;
 import com.mavha.cursos.java.app.jpa.modelo.Proyecto;
+import com.mavha.cursos.java.app.jpa.modelo.Tarea;
 import java.util.Date;
 import java.util.List;
 import org.junit.After;
@@ -26,15 +23,13 @@ import org.junit.BeforeClass;
 public class ProyectoLogicDefaultImplTest {
     
     ProyectoLogic logica;
-    EmpleadoDao empleadoDao;
-    ProyectoDao pryDao;
+    EmpleadoLogic empleadoLogic;
 
     
     @Before
     public void setUp() {
         logica = new ProyectoLogicDefaultImpl();
-        empleadoDao = new EmpleadoDaoJPA();
-        pryDao = new ProyectoDaoJPA();
+        empleadoLogic = new EmpleadoLogicDefaultImpl();
     }
     
     @After
@@ -46,18 +41,28 @@ public class ProyectoLogicDefaultImplTest {
      */
     @Test
     public void testCrearProyecto() {
-        List<Proyecto> inicial = pryDao.buscarTodos();
-        Integer tamanioEsperado = inicial.size()+1;
-        Empleado e = new Empleado();
-        e.setNombre("MARTIN");
-        e.setSalarioHora(100.0);
-        e.setFechaContratacion(new Date());
-        empleadoDao.guardar(e);
-        List<Empleado> lista = empleadoDao.buscarTodos();
-        logica.crearProyecto("Proyecto1", 5000.0, lista.get(0).getId());
-        List<Proyecto> listaFinal = pryDao.buscarTodos();
-        Integer tamanioFinal = listaFinal.size();
-        assertEquals(tamanioEsperado, tamanioFinal);   
+        Empleado lider =  empleadoLogic.crearEmpleado("Martin", 100.0, new Date());
+        assertNotNull(lider);
+        Proyecto proyecto = logica.crearProyecto("Proyecto1", 1000.0, lider.getId());
+        assertNotNull(proyecto);
+        Double disponible = logica.presupuestoDisponible(proyecto.getId());
+        Double disponibleEsperado = 1000.0;
+        assertEquals(disponibleEsperado,disponible );
     }
+    
+    @Test
+    public void testAsignarTarea() {
+        Empleado lider =  empleadoLogic.crearEmpleado("Proyecto N", 100.0, new Date());
+        assertNotNull(lider);
+        Empleado empleado1 =  empleadoLogic.crearEmpleado("Empleado 1", 80.0, new Date());
+        assertNotNull(empleado1);
+        Proyecto proyecto = logica.crearProyecto("ProyectoX", 1000.0, lider.getId());
+        assertNotNull(proyecto);
+        Tarea tareaAsignada = logica.asignarTarea(proyecto.getId(), empleado1.getId(), "UNA TAREA sencilla", 10);
+        assertNotNull(tareaAsignada);
+        Double disponible = logica.presupuestoDisponible(proyecto.getId());
+        Double disponibleEsperado = 200.0;
+        assertEquals(disponible,disponibleEsperado );        
+    }    
     
 }

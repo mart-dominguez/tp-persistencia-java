@@ -6,6 +6,7 @@
 package com.mavha.cursos.java.app.jpa.modelo;
 
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +24,7 @@ public class Tarea {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String descripcion;
     @Column(name = "DURACION_ESTIMADA")
     private Integer duracionEstimada;
     @Column(name = "FECHA_INICIO")   
@@ -44,6 +46,16 @@ public class Tarea {
         this.id = id;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    
+    
     public Integer getDuracionEstimada() {
         return duracionEstimada;
     }
@@ -83,6 +95,37 @@ public class Tarea {
     public void setResponsable(Empleado responsable) {
         this.responsable = responsable;
     }
+
+    @Override
+    public String toString() {
+        return "Tarea{" + "id=" + id + ", descripcion=" + descripcion + ", duracionEstimada=" + duracionEstimada + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Tarea other = (Tarea) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
     
     
 }

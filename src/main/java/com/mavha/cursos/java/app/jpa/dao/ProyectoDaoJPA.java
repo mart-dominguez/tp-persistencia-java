@@ -17,12 +17,15 @@ public class ProyectoDaoJPA implements ProyectoDao{
     private EntityManager em;
 
     @Override
-    public void crear(Proyecto t) {
+    public Proyecto crear(Proyecto t) {
         em = ConexionJPA.getInstance().em();
         em.getTransaction().begin();
         em.persist(t);
+        em.flush();
+        em.refresh(t);
         em.getTransaction().commit();
-        em.close();        
+        em.close(); 
+        return t;
     }
 
     @Override
@@ -31,20 +34,27 @@ public class ProyectoDaoJPA implements ProyectoDao{
     }
 
     @Override
-    public void actualizar(Proyecto t) {
+    public Proyecto actualizar(Proyecto t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Proyecto buscarPorId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em = ConexionJPA.getInstance().em();
+        em.getTransaction().begin();
+        Proyecto resultado = em.find(Proyecto.class, id);
+        resultado.getTarea().size();
+        em.getTransaction().commit();
+        em.close();     
+        return resultado;
+
     }
 
     @Override
     public List<Proyecto> buscarTodos() {
         em = ConexionJPA.getInstance().em();
         em.getTransaction().begin();
-        List<Proyecto> p = em.createQuery("SELECT p FROM Proyecto p").getResultList();
+        List<Proyecto> p = em.createQuery("SELECT p FROM Proyecto p ").getResultList();
         em.getTransaction().commit();
         em.close();     
         return p;

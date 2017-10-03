@@ -6,6 +6,7 @@
 package com.mavha.cursos.java.app.jpa.modelo;
 
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -55,6 +56,37 @@ public class Departamento {
     public void setEmpleados(List<Empleado> empleados) {
         this.empleados = empleados;
     }
+
+    @Override
+    public String toString() {
+        return "Departamento{" + "id=" + id + ", nombre=" + nombre + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Departamento other = (Departamento) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
     
     
 }
